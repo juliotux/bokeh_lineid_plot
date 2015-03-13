@@ -104,7 +104,7 @@ def adjust_boxes(line_wave, box_widths, left_edge, right_edge,
 
     return wlp, changed, niter
 
-def plot_line_ids(plot, spec_wave, spec_flux, line_wave, line_label, label_size=None, **kwargs):
+def plot_line_ids(plot, spec_wave, spec_flux, line_wave, line_label, **kwargs):
     '''
     Label features with automatic layout of labels.
 
@@ -175,12 +175,11 @@ def plot_line_ids(plot, spec_wave, spec_flux, line_wave, line_label, label_size=
     except:
         if label_loc == 'above':
             line_loc = line_flux + label_dist
-            line_flux1 = line_loc - vert_space
         elif label_loc == 'below':
             line_loc = line_flux - label_dist
-            line_flux1 = line_loc + vert_space
         else:
             raise ValueError('the label_loc parameter must be \'above\', \'below\' or a float.')
+    line_flux1 = line_loc + vert_space*(line_flux-label_loc)/abs(line_flux-label_loc)
 
     max_iter = kwargs.get('max_iter', 1000)
     adjust_factor = kwargs.get('adjust_factor', 0.35)
